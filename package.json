@@ -1,0 +1,41 @@
+{
+  "name": "numtokana",
+  "version": "1.0.0",
+  "description": "converts numerals to hiragana, katakana or kanji",
+  "homepage": "https://github.com/Mammamu4/numtokana#readme",
+  "bugs": {
+    "url": "https://github.com/Mammamu4/numtokana/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mammamu4/numtokana.git"
+  },
+  "license": "ISC",
+  "author": "Fredrik Etsare",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.0.13",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [
+    "kana",
+    "japanese",
+    "numerals",
+    "hiragana",
+    "katakana",
+    "kanji",
+    "number",
+    "conversion"
+  ]
+}
