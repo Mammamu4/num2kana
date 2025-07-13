@@ -1,5 +1,5 @@
 {
-  "name": "numtokana",
+  "name": "num2kana",
   "version": "1.0.0",
   "description": "converts numerals to hiragana, katakana or kanji",
   "homepage": "https://github.com/Mammamu4/numtokana#readme",
@@ -15,14 +15,20 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "npm run build"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "devDependencies": {
     "@types/node": "^24.0.13",
