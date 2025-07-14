@@ -1,15 +1,15 @@
-import { ConversionOptions } from "./types.js";
+import { ConversionOptions, DEFAULT_OPTIONS } from "./types.js";
 import { getMyriad, getNumberOfMyriads, myriadSetToKana } from "./utils.js";
 
 /**
  * Converts a number to its Japanese reading in the specified script type
  * @param num The number to convert
- * @param options Configuration options including the script type
+ * @param options Configuration options including the script type and formatting preferences
  * @returns The number represented in Japanese reading (hiragana, katakana, or romaji)
  */
-export function numToKana(num: number, options: ConversionOptions): string {
-  const MYRIAD_VALUE = 10000;
-  const { type } = options;
+export function numToKana(num: number, options?: Partial<ConversionOptions>): string {
+  const mergedOptions: ConversionOptions = { ...DEFAULT_OPTIONS, ...options };
+  const { type, spaceRomaji } = mergedOptions;
   let result = "";
 
   // Calculate how many myriad groups there are in the number 
@@ -20,6 +20,7 @@ export function numToKana(num: number, options: ConversionOptions): string {
   // 1000 0000 0000 => also 3 myriad groups
   // 1 0000 0000 0000 => 4 myriad groups
   const numberOfMyriads = getNumberOfMyriads(num);
+  const MYRIAD_VALUE = 10000;
 
   // Process each myriad group from largest to smallest
   for (let i = numberOfMyriads; i >= 0; i--) {
@@ -31,12 +32,12 @@ export function numToKana(num: number, options: ConversionOptions): string {
     num %= Math.pow(MYRIAD_VALUE, i > 0 ? i : 1);
 
     // Convert the myriad group to kana and add to result
-    const myriadGroupText = myriadSetToKana(myriadValue, type);
+    const myriadGroupText = myriadSetToKana(myriadValue, mergedOptions);
     if (myriadGroupText) {
       result += myriadGroupText + myriadSuffix;
 
-      // Add space for romaji if not the last group
-      if (i > 0 && type === "romaji") {
+      // Add space for romaji if not the last group and spacing is enabled
+      if (i > 0 && type === "romaji" && spaceRomaji) {
         result += " ";
       }
     }
@@ -53,14 +54,14 @@ function calculateMyriadGroupValue(num: number, groupIndex: number, myriadValue:
   }
 }
 
-export function toHiragana(num: number): string {
-  return numToKana(num, { type: "hiragana" });
+export function toHiragana(num: number, options?: Partial<Omit<ConversionOptions, 'type'>>): string {
+  return numToKana(num, { ...options, type: "hiragana" });
 }
 
-export function toKatakana(num: number): string {
-  return numToKana(num, { type: "katakana" });
+export function toKatakana(num: number, options?: Partial<Omit<ConversionOptions, 'type'>>): string {
+  return numToKana(num, { ...options, type: "katakana" });
 }
 
-export function toRomaji(num: number): string {
-  return numToKana(num, { type: "romaji" });
+export function toRomaji(num: number, options?: Partial<Omit<ConversionOptions, 'type'>>): string {
+  return numToKana(num, { ...options, type: "romaji" });
 }

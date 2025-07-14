@@ -1,5 +1,5 @@
 import * as data from "./numToKana.js";
-import { OutputFormat, PlaceValues } from "./types.js";
+import { ConversionOptions, OutputFormat, PlaceValues } from "./types.js";
 
 export function getMyriad(num: number, type: OutputFormat): string {
   switch (type) {
@@ -31,15 +31,18 @@ function getMyriadSet(num: number): PlaceValues {
   };
 }
 
-export function myriadSetToKana(num: number, type: OutputFormat): string {
+export function myriadSetToKana(num: number, options: ConversionOptions): string {
+  const { type, spaceRomaji } = options;
   const myriadSet: PlaceValues = getMyriadSet(num);
   const script = data[type];
+  
   return [
     script.thousands[myriadSet.thousand],
     script.hundreds[myriadSet.hundred],
     script.tens[myriadSet.ten],
     script.units[myriadSet.one],
   ]
-    .filter((str): str is string => str !== "")
-    .join(type === "romaji" ? " " : "");
+  .filter((str): str is string => str !== "")
+  .join(spaceRomaji && type === "romaji" ? " " : "")
+
 }

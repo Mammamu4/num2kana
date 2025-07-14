@@ -6,6 +6,11 @@ export interface NumeralStrings {
   tens: string[];
   hundreds: string[];
   thousands: string[];
+  traditional?: {
+    4: string;
+    7: string;
+    9: string;
+  };
 }
 
 export interface PlaceValues {
@@ -17,4 +22,10 @@ export interface PlaceValues {
 
 export interface ConversionOptions {
   type: OutputFormat;
+  spaceRomaji?: boolean; // Add spaces between number groups in romaji
 }
+
+export const DEFAULT_OPTIONS: ConversionOptions = {
+  type: "hiragana",
+  spaceRomaji: true,
+};

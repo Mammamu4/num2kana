@@ -1,4 +1,4 @@
-import { OutputFormat, NumeralStrings } from "./types";
+import { NumeralStrings } from "./types";
 
 export const romaji: NumeralStrings = {
   myriads: [
@@ -56,7 +56,12 @@ export const romaji: NumeralStrings = {
     'nanasen',
     'hassen',
     'kyuusen'
-  ]
+  ],
+  traditional: {
+    4: "shi",
+    7: "shichi",
+    9: "ku"
+  }
 };
 
 export const hiragana: NumeralStrings = {
@@ -115,7 +120,12 @@ export const hiragana: NumeralStrings = {
     'ななせん',
     'はっせん',
     'きゅうせん'
-  ]
+  ],
+  traditional: {
+    4: "し",
+    7: "しち",
+    9: "く"
+  }
 };
 
 export const katakana: NumeralStrings = {
@@ -174,5 +184,10 @@ export const katakana: NumeralStrings = {
     'ナナセン',
     'ハッセン',
     'キュウセン'
-  ]
+  ],
+  traditional: {
+    4: "シ",
+    7: "シチ",
+    9: "ク"
+  }
 };
