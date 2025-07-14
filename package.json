@@ -23,6 +23,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "node --test",
     "prepare": "npm run build"
   },
   "files": [
