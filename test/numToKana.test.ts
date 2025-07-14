@@ -1,8 +1,12 @@
 import test from "node:test";
 import assert from "node:assert";
-import { getMyriad, getNumberOfMyriads, myriadSetToKana } from "./utils.js";
-import { numToKana, toHiragana, toKatakana, toRomaji } from "./index.js";
-import { ConversionOptions } from "./types.js";
+import {
+  getMyriad,
+  getNumberOfMyriads,
+  myriadSetToKana,
+} from "../src/utils.js";
+import { numToKana, toHiragana, toKatakana, toRomaji } from "../src/index.js";
+import { ConversionOptions } from "../src/types.js";
 
 // Utility function tests
 test("getMyriad", async (t) => {
@@ -55,16 +59,28 @@ test("getNumberOfMyriads", async (t) => {
 test("myriadSetToKana", async (t) => {
   const hiraganaOptions: ConversionOptions = { type: "hiragana" };
   const katakanOptions: ConversionOptions = { type: "katakana" };
-  const romajiOptions: ConversionOptions = { type: "romaji", spaceRomaji: false };
-  const romajiSpaceOptions: ConversionOptions = { type: "romaji", spaceRomaji: true };
+  const romajiOptions: ConversionOptions = {
+    type: "romaji",
+    spaceRomaji: false,
+  };
+  const romajiSpaceOptions: ConversionOptions = {
+    type: "romaji",
+    spaceRomaji: true,
+  };
 
   await t.test("converts simple numbers to hiragana correctly", () => {
     assert.strictEqual(myriadSetToKana(1, hiraganaOptions), "いち");
     assert.strictEqual(myriadSetToKana(5, hiraganaOptions), "ご");
     assert.strictEqual(myriadSetToKana(10, hiraganaOptions), "じゅう");
     assert.strictEqual(myriadSetToKana(42, hiraganaOptions), "よんじゅうに");
-    assert.strictEqual(myriadSetToKana(123, hiraganaOptions), "ひゃくにじゅうさん");
-    assert.strictEqual(myriadSetToKana(1234, hiraganaOptions), "せんにひゃくさんじゅうよん");
+    assert.strictEqual(
+      myriadSetToKana(123, hiraganaOptions),
+      "ひゃくにじゅうさん"
+    );
+    assert.strictEqual(
+      myriadSetToKana(1234, hiraganaOptions),
+      "せんにひゃくさんじゅうよん"
+    );
   });
 
   await t.test("converts simple numbers to katakana correctly", () => {
@@ -82,7 +98,10 @@ test("myriadSetToKana", async (t) => {
   });
 
   await t.test("handles spacing in romaji correctly", () => {
-    assert.strictEqual(myriadSetToKana(123, romajiSpaceOptions), "hyaku nijuu san");
+    assert.strictEqual(
+      myriadSetToKana(123, romajiSpaceOptions),
+      "hyaku nijuu san"
+    );
     assert.strictEqual(myriadSetToKana(123, romajiOptions), "hyakunijuusan");
   });
 });
@@ -112,20 +131,32 @@ test("numToKana", async (t) => {
     assert.strictEqual(numToKana(999), "きゅうひゃくきゅうじゅうきゅう");
     assert.strictEqual(numToKana(1000), "せん");
     assert.strictEqual(numToKana(1234), "せんにひゃくさんじゅうよん");
-    assert.strictEqual(numToKana(9999), "きゅうせんきゅうひゃくきゅうじゅうきゅう");
+    assert.strictEqual(
+      numToKana(9999),
+      "きゅうせんきゅうひゃくきゅうじゅうきゅう"
+    );
   });
 
   await t.test("converts myriad groups correctly", () => {
     assert.strictEqual(numToKana(10000), "いちまん");
     assert.strictEqual(numToKana(10001), "いちまんいち");
-    assert.strictEqual(numToKana(12345), "いちまんにせんさんびゃくよんじゅうご");
+    assert.strictEqual(
+      numToKana(12345),
+      "いちまんにせんさんびゃくよんじゅうご"
+    );
     assert.strictEqual(numToKana(100000000), "いちおく");
     assert.strictEqual(numToKana(1000000000000), "いちちょう");
   });
 
   await t.test("handles spacing in romaji correctly", () => {
-    assert.strictEqual(numToKana(12345, { type: "romaji", spaceRomaji: true }), "ichiman nisen sanbyaku yonjuu go");
-    assert.strictEqual(numToKana(12345, { type: "romaji", spaceRomaji: false }), "ichimannisensanbyakuyonjuugo");
+    assert.strictEqual(
+      numToKana(12345, { type: "romaji", spaceRomaji: true }),
+      "ichiman nisen sanbyaku yonjuu go"
+    );
+    assert.strictEqual(
+      numToKana(12345, { type: "romaji", spaceRomaji: false }),
+      "ichimannisensanbyakuyonjuugo"
+    );
   });
 });
 
@@ -133,17 +164,26 @@ test("numToKana", async (t) => {
 test("helper functions", async (t) => {
   await t.test("toHiragana converts correctly", () => {
     assert.strictEqual(toHiragana(123), "ひゃくにじゅうさん");
-    assert.strictEqual(toHiragana(1234567), "ひゃくにじゅうさんまんよんせんごひゃくろくじゅうなな");
+    assert.strictEqual(
+      toHiragana(1234567),
+      "ひゃくにじゅうさんまんよんせんごひゃくろくじゅうなな"
+    );
   });
 
   await t.test("toKatakana converts correctly", () => {
     assert.strictEqual(toKatakana(123), "ヒャクニジュウサン");
-    assert.strictEqual(toKatakana(1234567), "ヒャクニジュウサンマンヨンセンゴヒャクロクジュウナナ");
+    assert.strictEqual(
+      toKatakana(1234567),
+      "ヒャクニジュウサンマンヨンセンゴヒャクロクジュウナナ"
+    );
   });
 
   await t.test("toRomaji converts correctly", () => {
     assert.strictEqual(toRomaji(123), "hyaku nijuu san");
     assert.strictEqual(toRomaji(123, { spaceRomaji: false }), "hyakunijuusan");
-    assert.strictEqual(toRomaji(1234567), "hyaku nijuu sanman yonsen gohyaku rokujuu nana");
+    assert.strictEqual(
+      toRomaji(1234567),
+      "hyaku nijuu sanman yonsen gohyaku rokujuu nana"
+    );
   });
 });
