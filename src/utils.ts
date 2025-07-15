@@ -3,6 +3,8 @@ import { ConversionOptions, OutputFormat, PlaceValues } from "./types.js";
 
 export function getMyriad(num: number, type: OutputFormat): string {
   switch (type) {
+    case "kanji":
+      return data.kanji.myriads[num];
     case "hiragana":
       return data.hiragana.myriads[num];
     case "katakana":

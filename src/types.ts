@@ -1,4 +1,4 @@
-export type OutputFormat = "hiragana" | "katakana" | "romaji";
+export type OutputFormat = "kanji" | "hiragana" | "katakana" | "romaji";
 
 export interface NumeralStrings {
   myriads: string[];
@@ -26,6 +26,6 @@ export interface ConversionOptions {
 }
 
 export const DEFAULT_OPTIONS: ConversionOptions = {
-  type: "hiragana",
+  type: "kanji",
   spaceRomaji: true,
 };

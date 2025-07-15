@@ -1,5 +1,6 @@
 import { ConversionOptions, DEFAULT_OPTIONS } from "./types.js";
 import { getMyriad, getNumberOfMyriads, myriadSetToKana } from "./utils.js";
+import { zeroMap } from "./numToKana.js";
 
 /**
  * Converts a number to its Japanese reading in the specified script type
@@ -7,12 +8,26 @@ import { getMyriad, getNumberOfMyriads, myriadSetToKana } from "./utils.js";
  * @param options Configuration options including the script type and formatting preferences
  * @returns The number represented in Japanese reading (hiragana, katakana, or romaji)
  */
-export function numToKana(num: number, options?: Partial<ConversionOptions>): string {
+export function numToKana(
+  num: number,
+  options?: Partial<ConversionOptions>
+): string {
+  if (num < 0 || num > 1e20) {
+    throw new Error(
+      "Number is not within range: 0 <= num <= 10^20"
+    );
+  }
+
   const mergedOptions: ConversionOptions = { ...DEFAULT_OPTIONS, ...options };
   const { type, spaceRomaji } = mergedOptions;
+
+  if (num === 0) {
+    return zeroMap[type] || "零";
+  }
+
   let result = "";
 
-  // Calculate how many myriad groups there are in the number 
+  // Calculate how many myriad groups there are in the number
   // https://en.wikipedia.org/wiki/Myriad
   // If the number is less than 10000, we only have one myriad group
   // 1000 0000 => 2 myriad groups
@@ -46,7 +61,11 @@ export function numToKana(num: number, options?: Partial<ConversionOptions>): st
   return result.trim();
 }
 
-function calculateMyriadGroupValue(num: number, groupIndex: number, myriadValue: number): number {
+function calculateMyriadGroupValue(
+  num: number,
+  groupIndex: number,
+  myriadValue: number
+): number {
   if (groupIndex === 0) {
     return num % myriadValue;
   } else {
@@ -54,14 +73,47 @@ function calculateMyriadGroupValue(num: number, groupIndex: number, myriadValue:
   }
 }
 
-export function toHiragana(num: number, options?: Partial<Omit<ConversionOptions, 'type'>>): string {
+export function numToKanji(
+  num: number,
+  options?: Partial<Omit<ConversionOptions, "type">>
+): string {
+  return numToKana(num, { ...options, type: "kanji" });
+}
+
+export function numToHiragana(
+  num: number,
+  options?: Partial<Omit<ConversionOptions, "type">>
+): string {
   return numToKana(num, { ...options, type: "hiragana" });
 }
 
-export function toKatakana(num: number, options?: Partial<Omit<ConversionOptions, 'type'>>): string {
+export function numToKatakana(
+  num: number,
+  options?: Partial<Omit<ConversionOptions, "type">>
+): string {
   return numToKana(num, { ...options, type: "katakana" });
 }
 
-export function toRomaji(num: number, options?: Partial<Omit<ConversionOptions, 'type'>>): string {
+export function numToRomaji(
+  num: number,
+  options?: Partial<Omit<ConversionOptions, "type">>
+): string {
   return numToKana(num, { ...options, type: "romaji" });
+}
+
+export function numToAllFormats(
+  num: number,
+  options?: Partial<ConversionOptions>
+): {
+  kanji: string;
+  hiragana: string;
+  katakana: string;
+  romaji: string;
+} {
+  return {
+    kanji: numToKanji(num, options),
+    hiragana: numToHiragana(num, options),
+    katakana: numToKatakana(num, options),
+    romaji: numToRomaji(num, options),
+  };
 }
