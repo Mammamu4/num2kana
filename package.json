@@ -1,6 +1,6 @@
 {
   "name": "num2kana",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "converts numerals to hiragana, katakana or kanji",
   "homepage": "https://github.com/Mammamu4/numtokana#readme",
   "bugs": {
