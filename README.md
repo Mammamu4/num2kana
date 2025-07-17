@@ -2,6 +2,8 @@
 
 This package helps you translate numbers into Japanese writing systems, making it a useful tool for learning how to count in Japanese. While numbers are most commonly written in kanji, this package also supports conversion to hiragana and katakana—great for practicing pronunciation and understanding native usage.
 
+Check out this [demo](https://num2kana.fredriketsare.se/)! It shows how the package can be utilized. You can use it to learn all about japanese numerals.
+
 ## Installation
 
 ```bash

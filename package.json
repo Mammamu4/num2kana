@@ -1,8 +1,8 @@
 {
   "name": "num2kana",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "converts numerals to hiragana, katakana or kanji",
-  "homepage": "https://github.com/Mammamu4/numtokana#readme",
+  "homepage": "https://num2kana.fredriketsare.se/",
   "bugs": {
     "url": "https://github.com/Mammamu4/numtokana/issues"
   },
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Mammamu4/num2kana.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "author": "Fredrik Etsare",
   "type": "module",
   "main": "dist/index.js",
